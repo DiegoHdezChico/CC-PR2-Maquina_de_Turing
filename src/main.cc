@@ -11,9 +11,12 @@
 */
 
 #include "../includes/manejador_entrada.h"
+#include "../includes/maquina_turing.h"
 
 int main(int argc, char* argv[]) {
   ManejadorEntrada mi_manejador;
   mi_manejador.LecturaEntrada(argc, argv);
-  mi_manejador.ImprimeAtributos();
+  MaquinaTuring mi_maquina;
+  // mi_maquina.Configurar();
+  mi_maquina.ImprimeConfiguracion();
 }

@@ -13,10 +13,10 @@
 #include <iostream>
 #include <algorithm>
 
-#include "../includes/automata_pila_final.h"
+#include "../includes/maquina_turing.h"
 
 /**
- * @brief Configura el autómata de pila 
+ * @brief Configura la máquina de Turing
  * 
  * @param id_estados
  * @param alfabeto_entrada
@@ -25,22 +25,21 @@
  * @param id_estados_finales
  * @param descripcion_transiciones
  */
-void AutomataPilaFinal::Configurar(std::shared_ptr<std::vector<std::string>> id_estados, 
+void MaquinaTuring::Configurar(std::shared_ptr<std::vector<std::string>> id_estados, 
       std::shared_ptr<std::vector<char>> alfabeto_entrada, 
-      std::shared_ptr<std::vector<char>> alfabeto_pila, std::string id_estado_inicial,
-      char simbolo_inicial_pila, std::shared_ptr<std::vector<std::string>> id_estados_finales, 
-      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones,
-      bool mostrar_traza) {
+      std::shared_ptr<std::vector<char>> alfabeto_cinta, std::string id_estado_inicial,
+      char simbolo_blanco, std::shared_ptr<std::vector<std::string>> id_estados_finales, 
+      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, bool mostrar_traza) {
   try {
-    comprobador_automata_.Ejecutar(id_estados, alfabeto_entrada, alfabeto_pila,
-      id_estado_inicial, simbolo_inicial_pila, id_estados_finales, descripcion_transiciones);
+    comprobador_maquina.Ejecutar(id_estados, alfabeto_entrada, alfabeto_cinta,
+      id_estado_inicial, simbolo_blanco, id_estados_finales, descripcion_transiciones);
   } catch (double error) {
     throw error;
   }
   alfabeto_entrada_ = alfabeto_entrada;
-  alfabeto_pila_ = alfabeto_pila;
+  alfabeto_cinta_ = alfabeto_cinta;
   id_estado_inicial_ = id_estado_inicial;
-  simbolo_inicial_pila_ = simbolo_inicial_pila;
+  simbolo_blanco_ = simbolo_blanco;
   mostrar_traza_ = mostrar_traza;
   std::vector<std::pair<int, std::vector<std::string>>> descripcion_transiciones_numeradas;
   for (int i{0}; i < descripcion_transiciones->size(); ++i) {
@@ -72,7 +71,7 @@ void AutomataPilaFinal::Configurar(std::shared_ptr<std::vector<std::string>> id_
 /**
  * @brief Imprime la configuración actual del autómata
  */
-void AutomataPilaFinal::ImprimeConfiguracion() {
+void MaquinaTuring::ImprimeConfiguracion() {
   std::cout << "El conjunto de estados es:" << std::endl;
   for (int i{0}; i < estados_.size(); ++i) {
     std::cout << estados_[i].id() << " ";
@@ -83,13 +82,13 @@ void AutomataPilaFinal::ImprimeConfiguracion() {
     std::cout << alfabeto_entrada_->at(i) << " ";
   }
   std::cout << std::endl;
-  std::cout << "El alfabeto de pila es:" << std::endl;
-  for (int i{0}; i < alfabeto_pila_->size(); ++i) {
-    std::cout << alfabeto_pila_->at(i) << " ";
+  std::cout << "El alfabeto de cinta es:" << std::endl;
+  for (int i{0}; i < alfabeto_cinta_->size(); ++i) {
+    std::cout << alfabeto_cinta_->at(i) << " ";
   }
   std::cout << std::endl;
   std::cout << "El estado inicial es: " << id_estado_inicial_ << std::endl;
-  std::cout << "El simbolo inicial de la pila es: " << simbolo_inicial_pila_ << std::endl;
+  std::cout << "El simbolo blanco es: " << simbolo_blanco_ << std::endl;
   std::cout << "El conjunto de estados finales es:" << std::endl;
   for (int i{0}; i < estados_.size(); ++i) {
     if (estados_[i].es_final()) {
@@ -110,118 +109,6 @@ void AutomataPilaFinal::ImprimeConfiguracion() {
  * @param cadena_a_computar
  * @return true/false en función de si pertenece al lenguaje o no
  */
-bool AutomataPilaFinal::ComputaCadena(std::string cadena_a_computar) {
-  cadena_a_computar.erase(std::remove(cadena_a_computar.begin(), cadena_a_computar.end(), ' '), cadena_a_computar.end());
-  std::string inicio_pila{simbolo_inicial_pila_};
-  Pila pila_automata;
-  pila_automata.Push(inicio_pila);
-  int posicion_estado_arranque{0};
-  for (int i{0}; i < estados_.size(); ++i) {
-    if (id_estado_inicial_ == estados_[i].id()) {
-      posicion_estado_arranque = i;
-    }
-  }
-  int contador {0};
-  return Computar(cadena_a_computar, 0, posicion_estado_arranque, pila_automata, "", contador);
-}
-
-/**
- * @brief Función recursiva para comprobar si una cadena pertenece 
- * al lenguaje que reconoce un autómata.
- * 
- * @param cadena_a_computar
- * @param posicion_caracter_actual desde el cual determinaremos el cambio de estado
- * @param posicion_estado_actual dentro del vector de estados que es miembro de la clase
- */
-bool AutomataPilaFinal::Computar(std::string cadena_a_computar, 
-      int posicion_caracter_actual, int posicion_estado_actual, 
-      Pila pila_automata, std::string simbolos_pila_a_introducir,
-      int& contador) {
-  ++contador;
-  if (contador > 10000) {
-    throw 4.0;
-  }
-  char caracter_actual_entrada = cadena_a_computar[posicion_caracter_actual];
-  if (posicion_caracter_actual == cadena_a_computar.size()) {
-    caracter_actual_entrada = '.';
-  }
-  if (simbolos_pila_a_introducir != ".") {
-    pila_automata.Push(simbolos_pila_a_introducir);
-  }
-  if (pila_automata.Empty()) {
-    return false;
-  }
-  char tope_de_pila = pila_automata.Top();
-  pila_automata.Pop();
-  std::shared_ptr<const std::vector<std::pair<int, Transicion>>> transiciones_posibles = 
-      estados_[posicion_estado_actual].TransicionesPosibles(caracter_actual_entrada, 
-      tope_de_pila);
-  if (caracter_actual_entrada == '.' && transiciones_posibles->empty()) {
-    if (mostrar_traza_) {
-      std::cout << std::endl;
-      std::cout << "El estado actual es " << estados_[posicion_estado_actual].id() << std::endl;
-      std::cout << "La cadena es " << std::endl;
-      std::cout << "El estado de la pila es " << tope_de_pila;
-      pila_automata.ImprimePila();
-      std::cout << std::endl << "No hay transiciones disponibles." << std::endl;
-      std::cout << std::endl << "------------------------------------------------------" << std::endl;
-    }
-    if (estados_[posicion_estado_actual].es_final()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  bool cadena_pertenece{false};
-  int posicion_estado_siguiente{0};
-  int posicion_caracter_siguiente{0};
-  for (int i{0}; i < transiciones_posibles->size(); ++i) {
-    posicion_caracter_siguiente = posicion_caracter_actual;
-    for (int j{0}; j < estados_.size(); ++j) {
-      if (transiciones_posibles->at(i).second.id_estado_destino() == estados_[j].id()) {
-        posicion_estado_siguiente = j;
-      }
-    }
-    if (transiciones_posibles->at(i).second.simbolo_alfabeto_a_consumir() != '.') {
-      ++posicion_caracter_siguiente;
-    }
-    if (mostrar_traza_) {
-      std::cout << std::endl;
-      std::cout << "El estado actual es " << estados_[posicion_estado_actual].id() << std::endl;
-      std::cout << "La cadena es ";
-      for (int j{posicion_caracter_actual}; j < cadena_a_computar.size(); ++j) {
-        std::cout << cadena_a_computar[j];
-      }
-      std::cout << std::endl;
-      std::cout << "El estado de la pila es " << tope_de_pila;
-      pila_automata.ImprimePila();
-      std::cout << std::endl << "Las transiciones disponibles son ";
-      for (int j{0}; j < transiciones_posibles->size(); ++j) {
-        std::cout << transiciones_posibles->at(j).first << " ";
-      }
-      std::cout << std::endl << "Ejecutamos la transicion " << transiciones_posibles->at(i).first << std::endl;
-      std::cout << std::endl << "------------------------------------------------------" << std::endl;
-    }
-    cadena_pertenece = Computar(cadena_a_computar, posicion_caracter_siguiente, 
-        posicion_estado_siguiente, pila_automata, 
-        transiciones_posibles->at(i).second.simbolos_pila_a_introducir(), 
-        contador);
-    if (cadena_pertenece) {
-      return true;
-    }
-  }
-  if (mostrar_traza_) {
-    std::cout << std::endl;
-    std::cout << "El estado actual es " << estados_[posicion_estado_actual].id() << std::endl;
-    std::cout << "La cadena es ";
-    for (int j{posicion_caracter_actual}; j < cadena_a_computar.size(); ++j) {
-      std::cout << cadena_a_computar[j];
-    }
-    std::cout << std::endl;
-    std::cout << "El estado de la pila es " << tope_de_pila;
-    pila_automata.ImprimePila();
-    std::cout << std::endl << "No existen más transiciones que probar. Regresando..." << std::endl;
-    std::cout << "------------------------------------------------------" << std::endl;
-  }
-  return false; 
+bool MaquinaTuring::ComputaCadena(std::string cadena_a_computar) {
+  return 0;
 }

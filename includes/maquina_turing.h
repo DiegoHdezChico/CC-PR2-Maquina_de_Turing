@@ -13,9 +13,12 @@
 #include "transicion.h"
 #include "estado.h"
 #include "comprobador_maquina.h"
+#include "cinta_infinita.h"
 
 #ifndef MAQUINA_TURING_H
 #define MAQUINA_TURING_H
+
+typedef std::shared_ptr<std::vector<CintaInfinita>> Multicinta;
 
 class MaquinaTuring {
   public:
@@ -36,6 +39,7 @@ class MaquinaTuring {
   char simbolo_blanco_;
   bool mostrar_traza_;
   ComprobadorMaquina comprobador_maquina;
+  Multicinta cintas_;
 };
 
 #endif

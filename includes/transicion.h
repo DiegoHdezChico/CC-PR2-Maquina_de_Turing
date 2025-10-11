@@ -23,10 +23,11 @@ class Transicion {
   public:
   Transicion(const std::vector<std::string>& descripcion_transicion, int numero_cintas);
   std::string id_estado_origen() const { return id_estado_origen_; }
-  std::string id_estado_destino() const { return id_estado_destino_; };
+  std::string id_estado_destino() const { return id_estado_destino_; }
   void ImprimeTransicion() const;
   char simbolo_a_leer(int cinta_elegida) const { return transiciones_cinta_[cinta_elegida].simbolo_a_leer(); }
   char simbolo_a_escribir(int cinta_elegida) const { return transiciones_cinta_[cinta_elegida].simbolo_a_escribir(); }
+  char direccion_movimiento(int cinta_elegida) const { return transiciones_cinta_[cinta_elegida].direccion_movimiento(); }
 
   private:
   std::string id_estado_origen_;

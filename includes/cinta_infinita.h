@@ -21,7 +21,7 @@ class CintaInfinita {
   public:
   CintaInfinita(char simbolo_blanco): simbolo_blanco_(simbolo_blanco), cabeza_lectura_escritura_(0) { cinta_->clear(); }
   CintaInfinita(char simbolo_blanco, std::string cadena_a_introducir);
-  char ValorActual() const { return cinta_->at(cabeza_lectura_escritura_); }
+  char SimboloActual() const { return cinta_->at(cabeza_lectura_escritura_); }
   void MoverCabeza(char direccion);
   void Escribir(char simbolo_a_escribir);
 

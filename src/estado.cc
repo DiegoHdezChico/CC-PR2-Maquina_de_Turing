@@ -38,26 +38,24 @@ void Estado::ImprimeTransiciones() {
 }
 
 /**
- * @brief Devuelve un vector con las transiciones disponibles a partir de un simbolo de entrada
- * y de pila dados
+ * @brief Devuelve la transicion disponible para los simbolos sobre los cuales 
+ * se encuentra la cabeza de lectura/escritura actualmente
  * 
- * @param simbolo_entrada que participa en la transicion
- * @param simbolo_pila que participa en la transicion
- * @return transiciones disponibles con esos símbolos de entrada y pila
+ * @param simbolos_lectura
+ * @return O bien la transición encontrada, o null en caso de no haber 
+ * ninguna
  */
-// std::shared_ptr<const std::vector<std::pair<int, Transicion>>> 
-//     Estado::TransicionesPosibles(char simbolo_cadena, char simbolo_pila) {
-//   // std::cout << "llegada a transiciones posibles con simbolo de cadena "  << simbolo_cadena << " y simbolo de pila " 
-//   // << simbolo_pila << std::endl;
-//   std::shared_ptr<std::vector<std::pair<int, Transicion>>> transiciones_posibles;
-//   transiciones_posibles = std::make_shared<std::vector<std::pair<int, Transicion>>>();
-//   for (int i{0}; i < transiciones_estado_->size(); ++i) {
-//     if (simbolo_pila == transiciones_estado_->at(i).second.simbolo_pila_a_consumir()) {
-//       if (simbolo_cadena == transiciones_estado_->at(i).second.simbolo_alfabeto_a_consumir()
-//           || transiciones_estado_->at(i).second.simbolo_alfabeto_a_consumir() == '.') {
-//         transiciones_posibles->push_back(transiciones_estado_->at(i));
-//       }
-//     }
-//   }
-//   return transiciones_posibles;
-// }
+std::shared_ptr<const Transicion> Estado::TransicionPosible(const std::vector<char>& simbolos_lectura, int numero_cintas) const {
+  bool transicion_posible{true};
+  for (int i{0}; i < transiciones_estado_->size(); ++i) {
+    for (int j{0}; j < numero_cintas; ++j) {
+      if (transiciones_estado_->at(i).second.simbolo_a_leer(j) != simbolos_lectura[j]) {
+        transicion_posible = false;
+      }
+    }
+    if (transicion_posible == true) {
+      return std::make_shared<const Transicion>(transiciones_estado_->at(i).second);
+    }
+  }
+  return nullptr;
+}

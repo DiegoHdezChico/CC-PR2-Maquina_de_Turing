@@ -40,6 +40,9 @@ class MaquinaTuring {
   bool mostrar_traza_;
   ComprobadorMaquina comprobador_maquina;
   Multicinta cintas_;
+  int numero_cintas_;
+  void PreparaCintas(std::string cadena_entrada);
+  std::shared_ptr<const Estado> BuscaEstado(std::string id_estado_a_buscar);
 };
 
 #endif

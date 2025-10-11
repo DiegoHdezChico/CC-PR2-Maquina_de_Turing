@@ -10,6 +10,8 @@
  * @brief Fichero con la definición de metodos de la clase ComprobadorMaquina
 */
 
+#include <iostream>
+
 #include "../includes/comprobador_maquina.h"
 
 /**
@@ -37,9 +39,11 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
     throw 2.3;
   }
   if (simbolo_blanco == ' ') {
+    std::cout << "no hay estado simbolo blanco" << std::endl;
     throw 2.4;
   }
   if (id_estados_finales->empty()) {
+    std::cout << "no hay estados finales" << std::endl;
     throw 2.5;
   }
   std::vector<std::string> interseccion;
@@ -55,9 +59,11 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
     }
   }
   if (interseccion.size() != id_estados_finales->size()) {
+    std::cout << "Uno de los estados finales no es válido" << std::endl;
     throw 2.6;
   }
   if (!estado_inicial_valido) {
+    std::cout << "el estado inicial no es válido" << std::endl;
     throw 2.7;
   }
   bool simbolo_blanco_valido{false};
@@ -67,11 +73,10 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
     }
   }
   if (!simbolo_blanco_valido) {
+    std::cout << "el símbolo blanco no es válido" << std::endl;
     throw 2.8;
   }
-  CompruebaTransiciones(id_estados, alfabeto_entrada, alfabeto_cinta, 
-        id_estado_inicial, simbolo_blanco, id_estados_finales, 
-        descripcion_transiciones);
+  CompruebaTransiciones(id_estados, alfabeto_entrada, alfabeto_cinta, descripcion_transiciones);
 }
 
 /**
@@ -80,31 +85,27 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
  * @param id_estados
  * @param alfabeto_entrada
  * @param alfabeto_cinta
- * @param id_estado_inicial
- * @param simbolo_inicial_pila
- * @param id_estados_finales
  * @param descripcion_transiciones que queremos comprobar
  */
 void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::string>> id_estados, 
       std::shared_ptr<std::vector<char>> alfabeto_entrada, 
-      std::shared_ptr<std::vector<char>> alfabeto_pila, std::string id_estado_inicial,
-      char simbolo_inicial_pila, std::shared_ptr<std::vector<std::string>> id_estados_finales, 
+      std::shared_ptr<std::vector<char>> alfabeto_cinta,
       std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones) {
   std::string id_estado_origen{""};
-  char simbolo_alfabeto_a_consumir{' '};
-  char simbolo_pila_a_consumir{' '};
   std::string id_estado_destino{""};
-  std::string simbolos_pila_a_introducir{""};
+  char simbolo_a_leer{' '};
+  char simbolo_a_escribir{' '};
+  char movimiento_a_realizar{' '};
   bool transicion_valida{false};
+  bool simbolo_a_leer_valido{false};
+  bool simbolo_a_escribir_valido{false};
+  bool movimiento_valido{false};
   for (int i{0}; i < descripcion_transiciones->size(); ++i) {
     id_estado_origen = descripcion_transiciones->at(i)[0];
-    simbolo_alfabeto_a_consumir = descripcion_transiciones->at(i)[1][0];
-    simbolo_pila_a_consumir = descripcion_transiciones->at(i)[2][0];
-    id_estado_destino = descripcion_transiciones->at(i)[3];
-    simbolos_pila_a_introducir = descripcion_transiciones->at(i)[4];
+    id_estado_destino = descripcion_transiciones->at(i)[1];
     // Comprobamos el estado de origen
-    for (int i{0}; i < id_estados->size(); ++i) {
-      if (id_estado_origen == id_estados->at(i)) {
+    for (int j{0}; j < id_estados->size(); ++j) {
+      if (id_estado_origen == id_estados->at(j)) {
         transicion_valida = true;
       }
     }
@@ -113,8 +114,8 @@ void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::
     }
     transicion_valida = false;
     // Comprobamos el estado destino
-    for (int i{0}; i < id_estados->size(); ++i) {
-      if (id_estado_destino == id_estados->at(i)) {
+    for (int j{0}; j < id_estados->size(); ++j) {
+      if (id_estado_destino == id_estados->at(j)) {
         transicion_valida = true;
       }
     }
@@ -122,40 +123,50 @@ void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::
       throw 3.4;
     }
     transicion_valida = false;
-    // Comprobamos el simbolo de entrada a consumir
-    for (int i{0}; i < alfabeto_entrada->size(); ++i) {
-      if (simbolo_alfabeto_a_consumir == alfabeto_entrada->at(i) || simbolo_alfabeto_a_consumir == '.') {
-        transicion_valida = true;
+    for (int j{2}; j < descripcion_transiciones->at(i).size(); j += 3) {
+      simbolo_a_leer = descripcion_transiciones->at(i)[j][0];
+      simbolo_a_escribir = descripcion_transiciones->at(i)[j + 1][0];
+      movimiento_a_realizar = descripcion_transiciones->at(i)[j + 2][0];
+      // Comprobamos el simbolo a leer
+      for (int k{0}; k < alfabeto_cinta->size(); ++k) {
+        if (simbolo_a_leer == alfabeto_cinta->at(k)) {
+          simbolo_a_leer_valido = true;
+        }
+        if (simbolo_a_escribir == alfabeto_cinta->at(k)) {
+          simbolo_a_escribir_valido = true;
+        }
       }
-    }
-    if (!transicion_valida) {
-      throw 3.5;
-    }
-    transicion_valida = false;
-    // Comprobamos el simbolo de pila a consumir
-    for (int i{0}; i < alfabeto_pila->size(); ++i) {
-      if (simbolo_pila_a_consumir == alfabeto_pila->at(i)) {
-        transicion_valida = true;
+      if (!simbolo_a_leer_valido) {
+        throw 3.5;
       }
-      if (simbolo_pila_a_consumir == '.') {
-        transicion_valida = false;
+      simbolo_a_leer_valido = false;
+      if (!simbolo_a_escribir_valido) {
+        throw 3.6;
       }
-    }
-    if (!transicion_valida) {
-      throw 3.6;
-    }
-    transicion_valida = false;
-    // Comprobamos los simbolos de pila a introducir
-    for (int i{0}; i < simbolos_pila_a_introducir.size(); ++i) {
-      for (int j{0}; j < alfabeto_pila->size(); ++j) {
-        if (simbolos_pila_a_introducir[i] == alfabeto_pila->at(j) || simbolos_pila_a_introducir[i] == '.') {
-          transicion_valida = true;
-        }      
-      }
-      if (!transicion_valida) {
+      simbolo_a_escribir_valido = false;
+      if (!CompruebaMovimiento(movimiento_a_realizar)) {
         throw 3.7;
       }
-      transicion_valida = false;
     }
+    transicion_valida = false;
   }
+}
+
+/**
+ * @brief Comrpueba si un movimiento es válido
+ * 
+ * @param movimiento_a_comprobar
+ * @return true/false en función del resultado
+ */
+bool ComprobadorMaquina::CompruebaMovimiento(char movimiento_a_comprobar) {
+  if (movimiento_a_comprobar == 'L') {
+    return true;
+  }
+  if (movimiento_a_comprobar == 'R') {
+    return true;
+  }
+  if (movimiento_a_comprobar == 'S') {
+    return true;
+  }
+  return false;
 }

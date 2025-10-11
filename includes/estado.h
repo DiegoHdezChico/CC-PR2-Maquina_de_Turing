@@ -25,7 +25,7 @@ class Estado {
   std::string id() const { return id_; }
   bool es_final() const { return es_final_; }
   void ImprimeTransiciones();
-  std::shared_ptr<const std::vector<std::pair<int, Transicion>>> TransicionesPosibles(char simbolo_entrada, char simbolo_pila);
+  // std::shared_ptr<const std::vector<std::pair<int, Transicion>>> TransicionesPosibles(char simbolo_entrada, char simbolo_pila);
 
   private:
   std::string id_;

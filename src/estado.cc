@@ -45,19 +45,19 @@ void Estado::ImprimeTransiciones() {
  * @param simbolo_pila que participa en la transicion
  * @return transiciones disponibles con esos símbolos de entrada y pila
  */
-std::shared_ptr<const std::vector<std::pair<int, Transicion>>> 
-    Estado::TransicionesPosibles(char simbolo_cadena, char simbolo_pila) {
-  // std::cout << "llegada a transiciones posibles con simbolo de cadena "  << simbolo_cadena << " y simbolo de pila " 
-  // << simbolo_pila << std::endl;
-  std::shared_ptr<std::vector<std::pair<int, Transicion>>> transiciones_posibles;
-  transiciones_posibles = std::make_shared<std::vector<std::pair<int, Transicion>>>();
-  for (int i{0}; i < transiciones_estado_->size(); ++i) {
-    if (simbolo_pila == transiciones_estado_->at(i).second.simbolo_pila_a_consumir()) {
-      if (simbolo_cadena == transiciones_estado_->at(i).second.simbolo_alfabeto_a_consumir()
-          || transiciones_estado_->at(i).second.simbolo_alfabeto_a_consumir() == '.') {
-        transiciones_posibles->push_back(transiciones_estado_->at(i));
-      }
-    }
-  }
-  return transiciones_posibles;
-}
+// std::shared_ptr<const std::vector<std::pair<int, Transicion>>> 
+//     Estado::TransicionesPosibles(char simbolo_cadena, char simbolo_pila) {
+//   // std::cout << "llegada a transiciones posibles con simbolo de cadena "  << simbolo_cadena << " y simbolo de pila " 
+//   // << simbolo_pila << std::endl;
+//   std::shared_ptr<std::vector<std::pair<int, Transicion>>> transiciones_posibles;
+//   transiciones_posibles = std::make_shared<std::vector<std::pair<int, Transicion>>>();
+//   for (int i{0}; i < transiciones_estado_->size(); ++i) {
+//     if (simbolo_pila == transiciones_estado_->at(i).second.simbolo_pila_a_consumir()) {
+//       if (simbolo_cadena == transiciones_estado_->at(i).second.simbolo_alfabeto_a_consumir()
+//           || transiciones_estado_->at(i).second.simbolo_alfabeto_a_consumir() == '.') {
+//         transiciones_posibles->push_back(transiciones_estado_->at(i));
+//       }
+//     }
+//   }
+//   return transiciones_posibles;
+// }

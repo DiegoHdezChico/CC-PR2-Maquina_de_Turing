@@ -14,25 +14,24 @@
 #include <vector>
 #include <string>
 
+#include "transicion_cinta.h"
+
 #ifndef TRANSICION_H
 #define TRANSICION_H
 
 class Transicion {
   public:
-  Transicion(const std::vector<std::string>& descripcion_transicion);
+  Transicion(const std::vector<std::string>& descripcion_transicion, int numero_cintas);
   std::string id_estado_origen() const { return id_estado_origen_; }
-  char simbolo_alfabeto_a_consumir() const { return simbolo_alfabeto_a_consumir_; }
-  char simbolo_pila_a_consumir() const { return simbolo_pila_a_consumir_; };
   std::string id_estado_destino() const { return id_estado_destino_; };
-  std::string simbolos_pila_a_introducir() const { return simbolos_pila_a_introducir_; }
   void ImprimeTransicion() const;
-  
+  char simbolo_a_leer(int cinta_elegida) const { return transiciones_cinta_[cinta_elegida].simbolo_a_leer(); }
+  char simbolo_a_escribir(int cinta_elegida) const { return transiciones_cinta_[cinta_elegida].simbolo_a_escribir(); }
+
   private:
   std::string id_estado_origen_;
-  char simbolo_alfabeto_a_consumir_;
-  char simbolo_pila_a_consumir_;
   std::string id_estado_destino_;
-  std::string simbolos_pila_a_introducir_;
+  std::vector<TransicionCinta> transiciones_cinta_;
 };
 
 #endif

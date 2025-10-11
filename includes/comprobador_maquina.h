@@ -28,10 +28,10 @@ class ComprobadorMaquina {
 
   private:
   void CompruebaTransiciones(std::shared_ptr<std::vector<std::string>> id_estados, 
-      std::shared_ptr<std::vector<char>> alfabeto_entrada, 
-      std::shared_ptr<std::vector<char>> alfabeto_pila, std::string id_estado_inicial,
-      char simbolo_inicial_pila, std::shared_ptr<std::vector<std::string>> id_estados_finales, 
-      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones);
+    std::shared_ptr<std::vector<char>> alfabeto_entrada, 
+    std::shared_ptr<std::vector<char>> alfabeto_cinta,
+    std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones);
+  bool CompruebaMovimiento(char movimiento_a_comprobar);
 };
 
 #endif

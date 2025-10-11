@@ -29,7 +29,7 @@ void MaquinaTuring::Configurar(std::shared_ptr<std::vector<std::string>> id_esta
       std::shared_ptr<std::vector<char>> alfabeto_entrada, 
       std::shared_ptr<std::vector<char>> alfabeto_cinta, std::string id_estado_inicial,
       char simbolo_blanco, std::shared_ptr<std::vector<std::string>> id_estados_finales, 
-      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, bool mostrar_traza) {
+      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, int numero_cintas,bool mostrar_traza) {
   try {
     comprobador_maquina.Ejecutar(id_estados, alfabeto_entrada, alfabeto_cinta,
       id_estado_inicial, simbolo_blanco, id_estados_finales, descripcion_transiciones);
@@ -54,7 +54,7 @@ void MaquinaTuring::Configurar(std::shared_ptr<std::vector<std::string>> id_esta
     transiciones_estado_actual = std::make_shared<std::vector<std::pair<int, Transicion>>>();
     for (int j{0}; j < descripcion_transiciones_numeradas.size(); ++j) {
       if (estado_actual == descripcion_transiciones_numeradas[j].second[0]) {
-        transiciones_estado_actual->push_back(std::make_pair(descripcion_transiciones_numeradas[j].first, Transicion(descripcion_transiciones->at(j))));
+        transiciones_estado_actual->push_back(std::make_pair(descripcion_transiciones_numeradas[j].first, Transicion(descripcion_transiciones->at(j), numero_cintas)));
         ++numero_transicion;
       }
     }

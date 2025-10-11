@@ -27,6 +27,7 @@ ManejadorEntrada::ManejadorEntrada() {
   descripcion_transiciones_ = std::make_shared<std::vector<std::vector<std::string>>>();
   cadenas_por_fichero_ = false;
   cadenas_entrada_ = std::make_shared<std::vector<std::string>>();
+  numero_cintas_ = 0;
   mostrar_traza_ = false;
 }
 
@@ -43,7 +44,6 @@ void ManejadorEntrada::LecturaEntrada(int argc, char* argv[]) {
     argumento_actual = argv[i];
     if (argumento_actual == "-a") {
       nombre_fichero_automata = argv[i + 1];
-      std::cout << nombre_fichero_automata << std::endl;
     }
     if (argumento_actual == "-f") {
       nombre_fichero_cadenas = argv[i + 1];
@@ -95,6 +95,7 @@ void ManejadorEntrada::ImprimeAtributos() {
   for (int i{0}; i < id_estados_finales_->size(); ++i) {
     std::cout << id_estados_finales_->at(i) << " ";
   }
+  std::cout << "El número de cintas es " << numero_cintas_ << std::endl;
   std::cout << std::endl;
   std::cout << "La función de transición es:" << std::endl;
   for (int i{0}; i < descripcion_transiciones_->size(); ++i) {
@@ -141,6 +142,9 @@ void ManejadorEntrada::LecturaFicheroAutomata(std::string nombre_fichero) {
             break;
           case 5:
             LecturaMultipleEstados(informacion_a_extraer, 2);
+            break;
+          case 6:
+            informacion_a_extraer >> numero_cintas_;
             break;
           default:
             LecturaTransicion(informacion_a_extraer);
@@ -198,13 +202,20 @@ void ManejadorEntrada::LecturaMultipleEstados(std::stringstream& informacion_ent
  * @param informacion_entrada desde la cual se extraerá la transición
  */
 void ManejadorEntrada::LecturaTransicion(std::stringstream& informacion_entrada) {
-  std::string dato_a_extraer{""};
+  std::string informacion_cinta{""};
+  std::string id_estado_origen{""};
+  std::string id_estado_destino{""};
   std::vector<std::string> nueva_transicion;
   nueva_transicion.clear();
-  while (informacion_entrada >> dato_a_extraer) {
-    nueva_transicion.push_back(dato_a_extraer);
+  informacion_entrada >> id_estado_origen;
+  nueva_transicion.push_back(id_estado_origen);
+  informacion_entrada >> id_estado_destino;
+  nueva_transicion.push_back(id_estado_destino);
+  int elementos_cinta_leidos{0};
+  while (informacion_entrada >> informacion_cinta) {
+    nueva_transicion.push_back(informacion_cinta);
   }
-  if (nueva_transicion.size() != 5) {
+  if (nueva_transicion.size() != 2 + 3 * numero_cintas_) {
     throw 1.2;
   }
   descripcion_transiciones_->push_back(nueva_transicion);

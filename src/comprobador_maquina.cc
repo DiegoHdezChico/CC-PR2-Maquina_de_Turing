@@ -39,11 +39,9 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
     throw 2.3;
   }
   if (simbolo_blanco == ' ') {
-    std::cout << "no hay estado simbolo blanco" << std::endl;
     throw 2.4;
   }
   if (id_estados_finales->empty()) {
-    std::cout << "no hay estados finales" << std::endl;
     throw 2.5;
   }
   std::vector<std::string> interseccion;
@@ -59,11 +57,9 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
     }
   }
   if (interseccion.size() != id_estados_finales->size()) {
-    std::cout << "Uno de los estados finales no es válido" << std::endl;
     throw 2.6;
   }
   if (!estado_inicial_valido) {
-    std::cout << "el estado inicial no es válido" << std::endl;
     throw 2.7;
   }
   bool simbolo_blanco_valido{false};
@@ -110,7 +106,7 @@ void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::
       }
     }
     if (!transicion_valida) {
-      throw 3.3;
+      throw 3.4;
     }
     transicion_valida = false;
     // Comprobamos el estado destino
@@ -120,7 +116,7 @@ void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::
       }
     }
     if (!transicion_valida) {
-      throw 3.4;
+      throw 3.5;
     }
     transicion_valida = false;
     for (int j{2}; j < descripcion_transiciones->at(i).size(); j += 3) {
@@ -137,15 +133,15 @@ void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::
         }
       }
       if (!simbolo_a_leer_valido) {
-        throw 3.5;
+        throw 3.6;
       }
       simbolo_a_leer_valido = false;
       if (!simbolo_a_escribir_valido) {
-        throw 3.6;
+        throw 3.7;
       }
       simbolo_a_escribir_valido = false;
       if (!CompruebaMovimiento(movimiento_a_realizar)) {
-        throw 3.7;
+        throw 3.8;
       }
     }
     transicion_valida = false;

@@ -14,16 +14,31 @@
 
 #include "../includes/manejador_entrada.h"
 #include "../includes/maquina_turing.h"
+#include "../includes/manejador_errores.h"
 
 int main(int argc, char* argv[]) {
-  ManejadorEntrada mi_manejador;
-  mi_manejador.LecturaEntrada(argc, argv);
+  ManejadorEntrada mi_manejador_entrada;
+  ManejadorErrores mi_manejador_errores;
+  try {
+    mi_manejador_entrada.LecturaEntrada(argc, argv);
+  } catch (double error) {
+    mi_manejador_errores.Alertar(error);
+    return 1;
+  }
   MaquinaTuring mi_maquina;
-  mi_maquina.Configurar(mi_manejador.id_estados(), 
-      mi_manejador.alfabeto_entrada(), mi_manejador.alfabeto_cinta(), 
-      mi_manejador.id_estado_inicial(), mi_manejador.simbolo_blanco(), 
-      mi_manejador.id_estados_finales(), 
-      mi_manejador.descripcion_transiciones(), mi_manejador.numero_cintas(),
-      mi_manejador.mostrar_traza());
+  try {
+    mi_maquina.Configurar(mi_manejador_entrada.id_estados(), 
+        mi_manejador_entrada.alfabeto_entrada(), 
+        mi_manejador_entrada.alfabeto_cinta(), 
+        mi_manejador_entrada.id_estado_inicial(), 
+        mi_manejador_entrada.simbolo_blanco(), 
+        mi_manejador_entrada.id_estados_finales(), 
+        mi_manejador_entrada.descripcion_transiciones(), 
+        mi_manejador_entrada.numero_cintas(),
+        mi_manejador_entrada.mostrar_traza());
+  } catch (double error) {
+    mi_manejador_errores.Alertar(error);
+    return 1;
+  }
   mi_maquina.ImprimeConfiguracion();
 }

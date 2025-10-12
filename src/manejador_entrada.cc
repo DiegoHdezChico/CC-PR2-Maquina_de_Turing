@@ -145,6 +145,9 @@ void ManejadorEntrada::LecturaFicheroAutomata(std::string nombre_fichero) {
             break;
           case 6:
             informacion_a_extraer >> numero_cintas_;
+            if (numero_cintas_ == 0) {
+              throw 1.5;
+            }
             break;
           default:
             LecturaTransicion(informacion_a_extraer);

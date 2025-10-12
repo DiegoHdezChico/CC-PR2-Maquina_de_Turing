@@ -1,0 +1,13 @@
+# MT que reconozce el lenguaje L = { a^nb^m | m > n, n > 0 }
+# Se corresponde con la primera de las máquinas que tenemos que crear para la práctica.
+q0 q1 q2
+a b
+a b .
+q0
+.
+q2
+2
+q0 q0 a a R . a R
+q0 q1 b b S . . L
+q1 q1 b b R a a L
+q1 q2 . . L . . R

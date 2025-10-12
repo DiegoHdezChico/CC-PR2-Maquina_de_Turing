@@ -56,6 +56,7 @@ std::shared_ptr<const Transicion> Estado::TransicionPosible(const std::vector<ch
     if (transicion_posible == true) {
       return std::make_shared<const Transicion>(transiciones_estado_->at(i).second);
     }
+    transicion_posible = true;
   }
   return nullptr;
 }

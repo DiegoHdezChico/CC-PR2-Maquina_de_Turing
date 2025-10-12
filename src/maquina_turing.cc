@@ -132,6 +132,7 @@ bool MaquinaTuring::ComputaCadena(std::string cadena_a_computar) {
       cintas_->at(i).Escribir(transicion_a_efectuar->simbolo_a_escribir(i));
       cintas_->at(i).MoverCabeza(transicion_a_efectuar->direccion_movimiento(i));
     }
+    simbolos_a_leer.clear();
   }
 }
 
@@ -161,4 +162,13 @@ std::shared_ptr<const Estado> MaquinaTuring::BuscaEstado(std::string id_estado_a
     }
   }
   return nullptr;
+}
+
+/**
+ * @brief Imprime las cintas de la máquina en su estado actual
+ */
+void MaquinaTuring::ImprimeCintas() {
+  for (int i{0}; i < cintas_->size(); ++i) {
+    cintas_->at(i).ImprimeCinta();
+  }
 }

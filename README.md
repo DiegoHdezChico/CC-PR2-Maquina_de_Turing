@@ -34,10 +34,10 @@ Para ejecutar el programa, ejecutar:
 ```bash
 ./simulador_maquina_turing -m <instancia_maquina> -f <fichero_cadenas>
 ```
-De este modo:
+Donde:
 
 * `-m <instancia_maquina>`: Se utiliza para especifica el fichero en el cual se encuentra la descripción de la máquina de Turing a simular.
-* `-f <fichero_cadenas>`: Se utiliza para especificar el fichero en el cual se hayan las cadenas que queremos que compute nuestra máquina de Turing.
+* `-f <fichero_cadenas>`: Se utiliza para especificar el fichero en el cual se hallan las cadenas que queremos que compute nuestra máquina de Turing.
 
 >[!IMPORTANT]
 >Se ha de tener en cuenta que es obligatorio pasar al programa un fichero con las cadenas de entrada, en caso contrario, se lanzará un error.
@@ -45,7 +45,7 @@ De este modo:
 ---
 
 ## Tabla de errores.
-Al igual que en la práctica anterior, este programa lanza las excepciones pertinentes en forma de double, que más tarde es interpretado por el **manejador de errores**. A continuación se muestra la tabla con el significado de cada uno de los códigos.
+Al igual que en la práctica anterior, este programa lanza las excepciones pertinentes en forma de `double`, que más tarde es interpretado por el **manejador de errores**. A continuación se muestra la tabla con el significado de cada uno de los códigos.
 
 > [!NOTE]
 > Los códigos expresados como número enteros son generales y se lanzarán siempre junto a aquellos con decimales que comparten la parte entera.

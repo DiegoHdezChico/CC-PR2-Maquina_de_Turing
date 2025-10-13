@@ -25,7 +25,6 @@ ManejadorEntrada::ManejadorEntrada() {
   simbolo_blanco_ = ' ';
   id_estados_finales_ = std::make_shared<std::vector<std::string>>();
   descripcion_transiciones_ = std::make_shared<std::vector<std::vector<std::string>>>();
-  cadenas_por_fichero_ = false;
   cadenas_entrada_ = std::make_shared<std::vector<std::string>>();
   numero_cintas_ = 0;
   mostrar_traza_ = false;
@@ -42,12 +41,11 @@ void ManejadorEntrada::LecturaEntrada(int argc, char* argv[]) {
   std::string argumento_actual{""};
   for (int i{0}; i < argc; ++i) {
     argumento_actual = argv[i];
-    if (argumento_actual == "-a") {
+    if (argumento_actual == "-m") {
       nombre_fichero_automata = argv[i + 1];
     }
     if (argumento_actual == "-f") {
       nombre_fichero_cadenas = argv[i + 1];
-      cadenas_por_fichero_ = true;
     }
     if (argumento_actual == "-t") {
       mostrar_traza_ = true;
@@ -58,15 +56,13 @@ void ManejadorEntrada::LecturaEntrada(int argc, char* argv[]) {
   } catch (double error) {
     throw error;
   }
-  if (cadenas_por_fichero_ && nombre_fichero_cadenas == "") {
+  if (nombre_fichero_cadenas == "") {
     throw 1.3;
   }
-  if (cadenas_por_fichero_) {
-    try {
-      LecturaCadenasEntrada(nombre_fichero_cadenas);
-    } catch (double error) {
-      throw error;
-    }
+  try {
+    LecturaCadenasEntrada(nombre_fichero_cadenas);
+  } catch (double error) {
+    throw error;
   }
 }
 
@@ -234,8 +230,12 @@ void ManejadorEntrada::LecturaCadenasEntrada(std::string nombre_fichero_cadenas)
   if (!fichero_cadenas.is_open()) {
     throw 1.4;
   }
+  std::string linea_de_texto;
   std::string cadena_a_introducir;
-  while (std::getline(fichero_cadenas, cadena_a_introducir)) {
-    cadenas_entrada_->push_back(cadena_a_introducir);
+  while (std::getline(fichero_cadenas, linea_de_texto)) {
+    std::stringstream informacion_a_extraer(linea_de_texto);
+    while (informacion_a_extraer >> cadena_a_introducir) {
+      cadenas_entrada_->push_back(cadena_a_introducir);
+    }
   }
 }

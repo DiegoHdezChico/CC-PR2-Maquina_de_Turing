@@ -41,7 +41,6 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   mi_maquina.ImprimeConfiguracion();
-  bool pertenece{false};
   for (int i{0}; i < mi_manejador_entrada.cadenas_entrada()->size(); ++i) {
     std::cout << "Cadena " << mi_manejador_entrada.cadenas_entrada()->at(i);
     if (!mi_maquina.ComputaCadena(mi_manejador_entrada.cadenas_entrada()->at(i))) {

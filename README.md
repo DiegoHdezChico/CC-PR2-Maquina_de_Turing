@@ -1,8 +1,8 @@
-# CC-PR2-Maquina_de_Turing
+# Complejidad Computacional. Práctica 2. Máquina de Turing.
 
 En este repositorio se alojan los ficheros relacionados con la práctica 2 de Complejidad Computacional.
 
-En este caso, hemos dicidido que las [Máquinas de Turing](https://es.wikipedia.org/wiki/M%C3%A1quina_de_Turing) que creemos para esta práctica sean:
+En este caso, se ha decidido que las [Máquinas de Turing](https://es.wikipedia.org/wiki/M%C3%A1quina_de_Turing) que simule el programa tengas las siguientes características:
 
 * Movimiento y escritura simultáneos.
 * Posibilidad de no mover la cinta.
@@ -13,6 +13,11 @@ En este caso, hemos dicidido que las [Máquinas de Turing](https://es.wikipedia.
 
 ### Acceder al repositorio en GitHub.
 Para acceder al repositorio de GitHub de esta práctica, puede hacerlo por medio de este [enlace](https://github.com/DiegoHdezChico/CC-PR2-Maquina_de_Turing.git).
+
+---
+
+### Resolución de los ejercicios propuestos en la práctica.
+La propuesta de resolución de las máquinas de Turing que se pide crear en el enunciado de la práctica se encuentran en los ficheros [Ejercicio1_MT.txt](instancias_maquina/Ejercicio1_MT.txt) y [Ejercicio2_MT.txt](instancias_maquina/Ejercicio2_MT.txt) respectivamente.
 
 ---
 

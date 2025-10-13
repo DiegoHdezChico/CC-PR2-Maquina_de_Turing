@@ -18,9 +18,9 @@
  * @brief Constructor de la clase Transicion
  * 
  * @param descripcion_transicion desde la cual formaremos la transicion
- * @param id_estados identificador de los estados definidos del autómata
- * @param alfabeto_entrada del automata
- * @param alfabeto_pila del automata
+ * @param id_estados identificador de los estados definidos de la máquina
+ * @param alfabeto_entrada de la maquina
+ * @param alfabeto_pila de la maquina
  */
 Transicion::Transicion(const std::vector<std::string>& descripcion_transicion, int numero_cintas) {
   id_estado_origen_ = descripcion_transicion[0];

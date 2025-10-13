@@ -36,13 +36,13 @@ ManejadorEntrada::ManejadorEntrada() {
  * @param nombre_fichero desde el cual se extraerá la información
  */
 void ManejadorEntrada::LecturaEntrada(int argc, char* argv[]) {
-  std::string nombre_fichero_automata{""};
+  std::string nombre_fichero_maquina{""};
   std::string nombre_fichero_cadenas{""};
   std::string argumento_actual{""};
   for (int i{0}; i < argc; ++i) {
     argumento_actual = argv[i];
     if (argumento_actual == "-m") {
-      nombre_fichero_automata = argv[i + 1];
+      nombre_fichero_maquina = argv[i + 1];
     }
     if (argumento_actual == "-f") {
       nombre_fichero_cadenas = argv[i + 1];
@@ -52,7 +52,7 @@ void ManejadorEntrada::LecturaEntrada(int argc, char* argv[]) {
     }
   }
   try {
-    LecturaFicheroAutomata(nombre_fichero_automata);
+    LecturaFicheroMaquina(nombre_fichero_maquina);
   } catch (double error) {
     throw error;
   }
@@ -104,11 +104,11 @@ void ManejadorEntrada::ImprimeAtributos() {
 }
 
 /**
- * @brief Lee el fichero de entrada para precargar la configuración del autómata.
+ * @brief Lee el fichero de entrada para precargar la configuración de la máquina.
  *
  * @param nombre_fichero
  */
-void ManejadorEntrada::LecturaFicheroAutomata(std::string nombre_fichero) {
+void ManejadorEntrada::LecturaFicheroMaquina(std::string nombre_fichero) {
   std::ifstream fichero_entrada{nombre_fichero};
   if (!fichero_entrada.is_open()) {
     throw 1.1;

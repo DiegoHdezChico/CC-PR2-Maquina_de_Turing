@@ -45,7 +45,7 @@ class ManejadorEntrada {
   std::shared_ptr<std::vector<std::string>> cadenas_entrada_;
   int numero_cintas_;
   bool mostrar_traza_;
-  void LecturaFicheroAutomata(std::string nombre_fichero);
+  void LecturaFicheroMaquina(std::string nombre_fichero);
   void LecturaMultipleAlfabeto(std::stringstream& informacion_entrada, int id_alfabeto_a_rellenar);
   void LecturaMultipleEstados(std::stringstream& informacion_entrada, int id_conjunto_a_rellenar);
   void LecturaTransicion(std::stringstream& informacion_entrada);

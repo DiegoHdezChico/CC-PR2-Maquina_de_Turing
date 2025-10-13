@@ -29,8 +29,8 @@ void ManejadorErrores::Alertar(double codigo_error) {
       AlertaFicheroLectura();
     break;
     case 2:
-      std::cout << "Error en la configuración del autómata. ";
-      AlertaAutomata();
+      std::cout << "Error en la configuración de la máquina. ";
+      AlertaMaquina();
       break;
     case 3: 
       std::cout << "Error en las transiciones. ";
@@ -47,7 +47,7 @@ void ManejadorErrores::Alertar(double codigo_error) {
 void ManejadorErrores::AlertaFicheroLectura() {
   switch (codigo_especifico_) {
     case 1:
-      std::cout << "No se ha podido abrir el fichero con la descripción del autómata." << std::endl;
+      std::cout << "No se ha podido abrir el fichero con la descripción de la máquina." << std::endl;
       break;
     case 2:
       std::cout << "Una de las transiciones tiene un número incorrecto de entradas." << std::endl;
@@ -56,17 +56,17 @@ void ManejadorErrores::AlertaFicheroLectura() {
       std::cout << "No se ha especificado un fichero de entrada de cadenas." << std::endl;
       break;
     case 4:
-      std::cout << "No se ha encontrado el fichero con las cadenas de entrada" << std::endl;
+      std::cout << "No se ha encontrado el fichero con las cadenas de entrada." << std::endl;
       break;
     case 5:
-      std::cout << "No se ha especificado un número de cintas valido" << std::endl;
+      std::cout << "No se ha especificado un número de cintas valido." << std::endl;
   }
 }
 
 /**
- * @brief Maneja las excepciones generadas durante la configuración del autómata
+ * @brief Maneja las excepciones generadas durante la configuración de la máquina
  */
-void ManejadorErrores::AlertaAutomata() {
+void ManejadorErrores::AlertaMaquina() {
   switch (codigo_especifico_) {
     case 1:
       std::cout << "El conjunto de estados está vacío." << std::endl;

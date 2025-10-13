@@ -5,9 +5,9 @@
  * Complejidad Computacional
  * 
  * @author Diego Hernández Chico
- * @date 19 Sep 2025
+ * @date 10 Oct 2025
  * CORREO: alu0101572062@ull.edu.es
- * @brief Fichero con la definición de los métodos de la clase AutomataPilaFinal
+ * @brief Fichero con la definición de los métodos de la clase MaquinaTuring
 */
 
 #include <iostream>
@@ -70,7 +70,7 @@ void MaquinaTuring::Configurar(std::shared_ptr<std::vector<std::string>> id_esta
 }
 
 /**
- * @brief Imprime la configuración actual del autómata
+ * @brief Imprime la configuración actual de la máquina
  */
 void MaquinaTuring::ImprimeConfiguracion() {
   std::cout << "El conjunto de estados es:" << std::endl;
@@ -105,7 +105,7 @@ void MaquinaTuring::ImprimeConfiguracion() {
 
 /**
  * @brief Computa una cadena dada como argumento para determinar si pertenece
- * al lenguaje que reconoce el autómata. Establece el inicio de la recursividad
+ * al lenguaje que reconoce la máquina. Establece el inicio de la recursividad
  * 
  * @param cadena_a_computar
  * @return true/false en función de si pertenece al lenguaje o no

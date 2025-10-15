@@ -10,7 +10,7 @@
 #
 
 CXX = g++
-CXXFLAGS = -g -std=c++17 #-fsanitize=address
+CXXFLAGS = -g -std=c++17 -fsanitize=address
 
 .PHONY: all clean 
 

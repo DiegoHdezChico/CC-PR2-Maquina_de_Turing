@@ -212,9 +212,12 @@ void ManejadorEntrada::LecturaTransicion(std::stringstream& informacion_entrada)
   nueva_transicion.clear();
   informacion_entrada >> id_estado_origen;
   nueva_transicion.push_back(id_estado_origen);
+  for (int i{0}; i < numero_cintas(); ++i) {
+    informacion_entrada >> informacion_cinta;
+    nueva_transicion.push_back(informacion_cinta);
+  }
   informacion_entrada >> id_estado_destino;
   nueva_transicion.push_back(id_estado_destino);
-  int elementos_cinta_leidos{0};
   while (informacion_entrada >> informacion_cinta) {
     nueva_transicion.push_back(informacion_cinta);
   }

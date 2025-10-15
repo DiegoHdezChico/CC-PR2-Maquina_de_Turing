@@ -28,7 +28,7 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
       std::shared_ptr<std::vector<char>> alfabeto_entrada, 
       std::shared_ptr<std::vector<char>> alfabeto_cinta, std::string id_estado_inicial,
       char simbolo_blanco, std::shared_ptr<std::vector<std::string>> id_estados_finales, 
-      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones) {
+      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, int numero_cintas) {
   if (id_estados->empty()) {
     throw 2.1;
   }
@@ -72,7 +72,7 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
     std::cout << "el símbolo blanco no es válido" << std::endl;
     throw 2.8;
   }
-  CompruebaTransiciones(id_estados, alfabeto_entrada, alfabeto_cinta, descripcion_transiciones);
+  CompruebaTransiciones(id_estados, alfabeto_entrada, alfabeto_cinta, descripcion_transiciones, numero_cintas);
 }
 
 /**
@@ -86,7 +86,7 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
 void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::string>> id_estados, 
       std::shared_ptr<std::vector<char>> alfabeto_entrada, 
       std::shared_ptr<std::vector<char>> alfabeto_cinta,
-      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones) {
+      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, int numero_cintas) {
   std::string id_estado_origen{""};
   std::string id_estado_destino{""};
   char simbolo_a_leer{' '};
@@ -96,9 +96,12 @@ void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::
   bool simbolo_a_leer_valido{false};
   bool simbolo_a_escribir_valido{false};
   bool movimiento_valido{false};
+  int indice_estado_origen{0};
+  int indice_estado_destino{numero_cintas + 1};
+  int indice_comienzo_escritura{indice_estado_destino + 1};
   for (int i{0}; i < descripcion_transiciones->size(); ++i) {
-    id_estado_origen = descripcion_transiciones->at(i)[0];
-    id_estado_destino = descripcion_transiciones->at(i)[1];
+    id_estado_origen = descripcion_transiciones->at(i)[indice_estado_origen];
+    id_estado_destino = descripcion_transiciones->at(i)[indice_estado_destino];
     // Comprobamos el estado de origen
     for (int j{0}; j < id_estados->size(); ++j) {
       if (id_estado_origen == id_estados->at(j)) {
@@ -119,10 +122,10 @@ void ComprobadorMaquina::CompruebaTransiciones(std::shared_ptr<std::vector<std::
       throw 3.5;
     }
     transicion_valida = false;
-    for (int j{2}; j < descripcion_transiciones->at(i).size(); j += 3) {
-      simbolo_a_leer = descripcion_transiciones->at(i)[j][0];
-      simbolo_a_escribir = descripcion_transiciones->at(i)[j + 1][0];
-      movimiento_a_realizar = descripcion_transiciones->at(i)[j + 2][0];
+    for (int j{0}; j < numero_cintas; ++j) {
+      simbolo_a_leer = descripcion_transiciones->at(i)[1 + j][0];
+      simbolo_a_escribir = descripcion_transiciones->at(i)[indice_comienzo_escritura + 2 * j][0];
+      movimiento_a_realizar = descripcion_transiciones->at(i)[indice_comienzo_escritura + 1 + 2 * j][0];
       // Comprobamos el simbolo a leer
       for (int k{0}; k < alfabeto_cinta->size(); ++k) {
         if (simbolo_a_leer == alfabeto_cinta->at(k)) {

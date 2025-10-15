@@ -32,7 +32,6 @@ class ManejadorEntrada {
   std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones() const { return descripcion_transiciones_; }
   std::shared_ptr<std::vector<std::string>> cadenas_entrada() const { return cadenas_entrada_; }
   int numero_cintas() const { return numero_cintas_; }
-  bool mostrar_traza() const { return mostrar_traza_; }
 
   private:
   std::shared_ptr<std::vector<std::string>> id_estados_;
@@ -44,7 +43,6 @@ class ManejadorEntrada {
   std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones_;
   std::shared_ptr<std::vector<std::string>> cadenas_entrada_;
   int numero_cintas_;
-  bool mostrar_traza_;
   void LecturaFicheroMaquina(std::string nombre_fichero);
   void LecturaMultipleAlfabeto(std::stringstream& informacion_entrada, int id_alfabeto_a_rellenar);
   void LecturaMultipleEstados(std::stringstream& informacion_entrada, int id_conjunto_a_rellenar);

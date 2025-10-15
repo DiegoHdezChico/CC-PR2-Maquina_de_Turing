@@ -23,31 +23,33 @@
  * @param alfabeto_pila de la maquina
  */
 Transicion::Transicion(const std::vector<std::string>& descripcion_transicion, int numero_cintas) {
+  int indice_estado_origen{0};
+  int indice_estado_destino{numero_cintas + 1};
+  int indice_comienzo_escritura{indice_estado_destino + 1};
   id_estado_origen_ = descripcion_transicion[0];
-  id_estado_destino_ = descripcion_transicion[numero_cintas + 1];
+  id_estado_destino_ = descripcion_transicion[indice_estado_destino];
   char simbolo_a_leer{' '};
   char simbolo_a_escribir{' '};
   char direccion_movimiento{' '};
   std::vector<std::vector<char>> descripciones_cinta;
-  // for (int i{0}; i < numero_cintas; ++i) {
-  //   descripciones_cinta.push_back(std::vector<char>);
-  // }
-  for (int i{0}; i < numero_cintas; i += 3) {
-    if (descripcion_transicion[i + 2].size() != 1) {
+  for (int i{0}; i < numero_cintas; ++i) {
+    descripciones_cinta.push_back(std::vector<char>());
+  }
+
+  for (int i{0}; i < numero_cintas; ++i) {
+    if (descripcion_transicion[i + 1].size() != 1) {
       throw 3.1;
     }
-    simbolo_a_leer = descripcion_transicion[i + 2][0];
+    simbolo_a_leer = descripcion_transicion[i + 1][0];
     descripciones_cinta[i].push_back(simbolo_a_leer);
-  }
-  for (int i {0}; i < numero_cintas * 2; i += 2) {
-    if (descripcion_transicion[i + 2 + numero_cintas].size() != 1) {
+    if (descripcion_transicion[indice_comienzo_escritura + 2 * i].size() != 1) {
       throw 3.2;
     }
-    if (descripcion_transicion[i + 3 + numero_cintas].size() != 1) {
+    if (descripcion_transicion[indice_comienzo_escritura + 2 * i + 1].size() != 1) {
       throw 3.3;
     }
-    simbolo_a_escribir = descripcion_transicion[i + 2 + numero_cintas][0];
-    direccion_movimiento = descripcion_transicion[i + 3 + numero_cintas][0];
+    simbolo_a_escribir = descripcion_transicion[indice_comienzo_escritura + 2 * i][0];
+    direccion_movimiento = descripcion_transicion[indice_comienzo_escritura + 2 * i + 1][0];
     descripciones_cinta[i].push_back(simbolo_a_escribir);
     descripciones_cinta[i].push_back(direccion_movimiento);
   }

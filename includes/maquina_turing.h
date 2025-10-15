@@ -27,7 +27,7 @@ class MaquinaTuring {
       std::shared_ptr<std::vector<char>> alfabeto_entrada, 
       std::shared_ptr<std::vector<char>> alfabeto_cinta, std::string id_estado_inicial,
       char simbolo_blanco, std::shared_ptr<std::vector<std::string>> id_estados_finales, 
-      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, int numero_cintas, bool mostrar_traza);
+      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, int numero_cintas);
   void ImprimeConfiguracion();
   bool ComputaCadena(std::string cadena_a_computar);
   void ImprimeCintas();

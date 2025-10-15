@@ -29,10 +29,10 @@ void MaquinaTuring::Configurar(std::shared_ptr<std::vector<std::string>> id_esta
       std::shared_ptr<std::vector<char>> alfabeto_entrada, 
       std::shared_ptr<std::vector<char>> alfabeto_cinta, std::string id_estado_inicial,
       char simbolo_blanco, std::shared_ptr<std::vector<std::string>> id_estados_finales, 
-      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, int numero_cintas,bool mostrar_traza) {
+      std::shared_ptr<std::vector<std::vector<std::string>>> descripcion_transiciones, int numero_cintas) {
   try {
     comprobador_maquina.Ejecutar(id_estados, alfabeto_entrada, alfabeto_cinta,
-      id_estado_inicial, simbolo_blanco, id_estados_finales, descripcion_transiciones);
+      id_estado_inicial, simbolo_blanco, id_estados_finales, descripcion_transiciones, numero_cintas);
   } catch (double error) {
     throw error;
   }
@@ -40,7 +40,6 @@ void MaquinaTuring::Configurar(std::shared_ptr<std::vector<std::string>> id_esta
   alfabeto_cinta_ = alfabeto_cinta;
   id_estado_inicial_ = id_estado_inicial;
   simbolo_blanco_ = simbolo_blanco;
-  mostrar_traza_ = mostrar_traza;
   numero_cintas_ = numero_cintas;
   std::vector<std::pair<int, std::vector<std::string>>> descripcion_transiciones_numeradas;
   for (int i{0}; i < descripcion_transiciones->size(); ++i) {
@@ -97,6 +96,7 @@ void MaquinaTuring::ImprimeConfiguracion() {
     }
   }
   std::cout << std::endl;
+  std::cout << "El número de cintas es: " << numero_cintas_ << std::endl;
   std::cout << "Las transiciones son:" << std::endl;
   for (int i{0}; i < estados_.size(); ++i) {
     estados_[i].ImprimeTransiciones();

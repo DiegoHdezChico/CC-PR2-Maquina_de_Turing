@@ -34,8 +34,7 @@ int main(int argc, char* argv[]) {
         mi_manejador_entrada.simbolo_blanco(), 
         mi_manejador_entrada.id_estados_finales(), 
         mi_manejador_entrada.descripcion_transiciones(), 
-        mi_manejador_entrada.numero_cintas(),
-        mi_manejador_entrada.mostrar_traza());
+        mi_manejador_entrada.numero_cintas());
   } catch (double error) {
     mi_manejador_errores.Alertar(error);
     return 1;

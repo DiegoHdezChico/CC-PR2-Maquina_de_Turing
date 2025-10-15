@@ -27,7 +27,6 @@ ManejadorEntrada::ManejadorEntrada() {
   descripcion_transiciones_ = std::make_shared<std::vector<std::vector<std::string>>>();
   cadenas_entrada_ = std::make_shared<std::vector<std::string>>();
   numero_cintas_ = 0;
-  mostrar_traza_ = false;
 }
 
 /**
@@ -46,9 +45,6 @@ void ManejadorEntrada::LecturaEntrada(int argc, char* argv[]) {
     }
     if (argumento_actual == "-f") {
       nombre_fichero_cadenas = argv[i + 1];
-    }
-    if (argumento_actual == "-t") {
-      mostrar_traza_ = true;
     }
   }
   try {

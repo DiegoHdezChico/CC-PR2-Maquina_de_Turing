@@ -22,7 +22,7 @@ class ManejadorErrores {
   int codigo_general_;
   int codigo_especifico_;
   void AlertaFicheroLectura();
-  void AlertaAutomata();
+  void AlertaMaquina();
   void AlertaTransiciones();
 };
 

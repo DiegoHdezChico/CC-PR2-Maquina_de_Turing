@@ -15,7 +15,7 @@
 #include "../includes/comprobador_maquina.h"
 
 /**
- * @brief Comprueba que la configuración del autómata sea correcta
+ * @brief Comprueba que la configuración de la máquina sea correcta
  * 
  * @param id_estados
  * @param alfabeto_entrada
@@ -76,7 +76,7 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
 }
 
 /**
- * @brief Comprueba que las transiciones del autómata sean correctas
+ * @brief Comprueba que las transiciones de la máquina sean correctas
  * 
  * @param id_estados
  * @param alfabeto_entrada

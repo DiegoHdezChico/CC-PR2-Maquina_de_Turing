@@ -13,12 +13,10 @@
 #include "transicion.h"
 #include "estado.h"
 #include "comprobador_maquina.h"
-#include "cinta_infinita.h"
+#include "multicinta.h"
 
 #ifndef MAQUINA_TURING_H
 #define MAQUINA_TURING_H
-
-typedef std::shared_ptr<std::vector<CintaInfinita>> Multicinta;
 
 class MaquinaTuring {
   public:
@@ -42,7 +40,6 @@ class MaquinaTuring {
   ComprobadorMaquina comprobador_maquina;
   Multicinta cintas_;
   int numero_cintas_;
-  void PreparaCintas(std::string cadena_entrada);
   std::shared_ptr<const Estado> BuscaEstado(std::string id_estado_a_buscar);
 };
 

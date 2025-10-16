@@ -111,14 +111,14 @@ void MaquinaTuring::ImprimeConfiguracion() {
  * @return true/false en función de si pertenece al lenguaje o no
  */
 bool MaquinaTuring::ComputaCadena(std::string cadena_a_computar) {
-  PreparaCintas(cadena_a_computar);
+  cintas_.PreparaCintas(cadena_a_computar, simbolo_blanco_, numero_cintas_);
   std::shared_ptr<const Estado> estado_actual = BuscaEstado(id_estado_inicial_);
   std::shared_ptr<const Transicion> transicion_a_efectuar;
-  std::vector<char> simbolos_a_leer;
+  std::shared_ptr<std::vector<char>> simbolos_a_leer;
+  std::shared_ptr<std::vector<char>> simbolos_a_escribir;
+  std::shared_ptr<std::vector<char>> movimientos_a_realizar;
   while (true) {
-    for (int i{0}; i < numero_cintas_; ++i) {
-      simbolos_a_leer.push_back(cintas_->at(i).SimboloActual());
-    }
+    simbolos_a_leer = cintas_.SimbolosActuales();
     transicion_a_efectuar = estado_actual->TransicionPosible(simbolos_a_leer, numero_cintas_);
     if (transicion_a_efectuar == nullptr) {
       if (estado_actual->es_final()) {
@@ -128,24 +128,14 @@ bool MaquinaTuring::ComputaCadena(std::string cadena_a_computar) {
       }
     }
     estado_actual = BuscaEstado(transicion_a_efectuar->id_estado_destino());
+    simbolos_a_escribir = std::make_shared<std::vector<char>>();
+    movimientos_a_realizar = std::make_shared<std::vector<char>>();
     for (int i{0}; i < numero_cintas_; ++i) {
-      cintas_->at(i).Escribir(transicion_a_efectuar->simbolo_a_escribir(i));
-      cintas_->at(i).MoverCabeza(transicion_a_efectuar->direccion_movimiento(i));
+      simbolos_a_escribir->push_back(transicion_a_efectuar->simbolo_a_escribir(i));
+      movimientos_a_realizar->push_back(transicion_a_efectuar->direccion_movimiento(i));
     }
-    simbolos_a_leer.clear();
-  }
-}
-
-/**
- * @brief Prepara las cintas para comenzar la ejecución
- * 
- * @param cadena_entrada con la que inicializar la primera cinta
- */
-void MaquinaTuring::PreparaCintas(std::string cadena_entrada) {
-  cintas_ = std::make_shared<std::vector<CintaInfinita>>();
-  cintas_->push_back(CintaInfinita(simbolo_blanco_, cadena_entrada));
-  for (int i{0}; i < numero_cintas_ - 1; ++i) {
-    cintas_->push_back(CintaInfinita(simbolo_blanco_));
+    cintas_.Escribir(simbolos_a_escribir);
+    cintas_.Mover(movimientos_a_realizar);
   }
 }
 
@@ -168,7 +158,5 @@ std::shared_ptr<const Estado> MaquinaTuring::BuscaEstado(std::string id_estado_a
  * @brief Imprime las cintas de la máquina en su estado actual
  */
 void MaquinaTuring::ImprimeCintas() {
-  for (int i{0}; i < cintas_->size(); ++i) {
-    cintas_->at(i).ImprimeCinta();
-  }
+  cintas_.ImprimeCintas();
 }

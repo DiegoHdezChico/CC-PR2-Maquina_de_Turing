@@ -45,11 +45,11 @@ void Estado::ImprimeTransiciones() {
  * @return O bien la transición encontrada, o null en caso de no haber 
  * ninguna
  */
-std::shared_ptr<const Transicion> Estado::TransicionPosible(const std::vector<char>& simbolos_lectura, int numero_cintas) const {
+std::shared_ptr<const Transicion> Estado::TransicionPosible(std::shared_ptr<std::vector<char>> simbolos_lectura, int numero_cintas) const {
   bool transicion_posible{true};
   for (int i{0}; i < transiciones_estado_->size(); ++i) {
     for (int j{0}; j < numero_cintas; ++j) {
-      if (transiciones_estado_->at(i).second.simbolo_a_leer(j) != simbolos_lectura[j]) {
+      if (transiciones_estado_->at(i).second.simbolo_a_leer(j) != simbolos_lectura->at(j)) {
         transicion_posible = false;
       }
     }

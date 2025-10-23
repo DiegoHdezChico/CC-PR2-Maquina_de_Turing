@@ -72,6 +72,11 @@ void ComprobadorMaquina::Ejecutar(std::shared_ptr<std::vector<std::string>> id_e
     std::cout << "el símbolo blanco no es válido" << std::endl;
     throw 2.8;
   }
+  for (int i{0}; i < alfabeto_entrada->size(); ++i) {
+    if (alfabeto_entrada->at(i) == simbolo_blanco) {
+      throw 2.9;
+    }
+  }
   CompruebaTransiciones(id_estados, alfabeto_entrada, alfabeto_cinta, descripcion_transiciones, numero_cintas);
 }
 

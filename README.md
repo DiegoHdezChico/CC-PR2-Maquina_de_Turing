@@ -67,6 +67,7 @@ Al igual que en la práctica anterior, este programa lanza las excepciones perti
 | 2.6             | Se ha incluido estados en el conjunto de estados finales que no pertenecen al conjunto de estados. |
 | 2.7             | No se ha introducido un estado inicial válido. |
 | 2.8             | El símbolo blanco especificado no pertenece al alfabeto de cinta. |
+| 2.9             | El símbolo blanco está presente en el alfabeto de entrada. |
 | **3**           | Error en las transiciones. |
 | 3.1             | Una de las transiciones hace uso de más de un caracter de lectura. |
 | 3.2             | Una de las transiciones hace uso de más de un caracter de escritura. |

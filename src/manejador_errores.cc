@@ -92,6 +92,9 @@ void ManejadorErrores::AlertaMaquina() {
     case 8:
       std::cout << "El símbolo blanco especificado no pertenece al alfabeto de cinta." << std::endl;
       break;
+    case 9:
+      std::cout << "El símbolo blanco está presente en el alfabeto de entrada." << std::endl;
+      break;
   }
 }
 

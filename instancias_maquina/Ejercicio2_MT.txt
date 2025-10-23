@@ -12,6 +12,7 @@ q0 a . . q0 a R 1 R . S
 q0 . . . q1 . L 1 S 1 S 
 q1 a 1 1 q1 1 L 1 S . L
 q1 b 1 1 q1 1 L 1 S . L
+q1 . 1 1 q1 1 L 1 S . L
 q1 a 1 . q2 . L 1 S . S 
 q1 b 1 . q2 . L 1 S . S 
 q1 . 1 . q2 . L 1 S . S

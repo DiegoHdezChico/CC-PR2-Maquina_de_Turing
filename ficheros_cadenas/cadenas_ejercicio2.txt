@@ -4,3 +4,7 @@ bba
 abbababa
 abb
 aaaa
+.
+b
+a
+abbabbc
